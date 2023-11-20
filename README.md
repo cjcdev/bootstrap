@@ -1,7 +1,9 @@
-# Docker Helper
+# Docker Bootstrap
 
-Simple script to build and run docker images.  This can be easily added to a current workspace by running the following command:
+Bootstrap a project and add standard Dockerfile and helper script to build and run the container.
 
+One-liner to bootstrap:
 ```
+wget https://raw.githubusercontent.com/cjcdev/docker-bootstrap/main/get.sh -O - | sh
 
 ```
