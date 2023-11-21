@@ -1,6 +1,5 @@
 FROM ubuntu:22.04
 
-# Update system and add the packages required for Yocto builds.
 # Use DEBIAN_FRONTEND=noninteractive, to avoid image build hang waiting
 # for a default confirmation [Y/n] at some configurations.
 ENV DEBIAN_FRONTEND=noninteractive
@@ -8,7 +7,6 @@ ENV DEBIAN_FRONTEND=noninteractive
 RUN apt clean
 RUN apt update
 RUN apt upgrade -y
-# RUN apt install -y apt-utils
 RUN apt install -y --fix-missing gawk wget git-core diffstat \
     unzip tar locales net-tools sudo vim curl software-properties-common \
     screen tmux vim gcc build-essential xz-utils zstd
