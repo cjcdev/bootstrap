@@ -22,10 +22,21 @@ Options:
 "
 }
 
+# figure out the path where this script is strored
+if [[ -h ${0} ]];then
+  # When script is called as a symlink
+  SCRIPT_FILE="${PWD}/$(readlink $(basename "$0"))"
+  SCRIPT_DIR="$(dirname "${SCRIPT_FILE}")"
+else
+  # When script is not called as as ymlink
+  SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
+fi 
+
 DOCKER_IMAGE_TAG=docker-helper
 DOCKER_CONTAINER_NAME=${DOCKER_IMAGE_TAG}-container
 
 WORK_DIR="${PWD}/work"
+DOCKERFILE="${SCRIPT_DIR}/Dockerfile"
 
 # process options
 while getopts bh OPTIONS; do

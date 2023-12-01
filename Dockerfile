@@ -17,7 +17,7 @@ RUN locale-gen en_US.UTF-8 && \
 ENV LANG en_US.UTF-8
 ENV LC_ALL en_US.UTF-8
 
-# Use dash
+# Use bash
 RUN rm /bin/sh && ln -s bash /bin/sh
 
 # Add your user to sudoers to be able to install other packages in the container.
