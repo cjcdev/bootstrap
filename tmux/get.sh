@@ -1,6 +1,6 @@
 #!/bin/sh
 
-BASE=https://raw.githubusercontent.com/cjcdev/bootstrap/tmux/main/
+BASE=https://raw.githubusercontent.com/cjcdev/bootstrap/main/tmux
 TMUX_CONF=${BASE}/tmux.conf
 DEST=~/.tmux.conf
 

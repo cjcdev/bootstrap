@@ -1,6 +1,6 @@
 #!/bin/sh
 
-BASE=https://raw.githubusercontent.com/cjcdev/bootstrap/docker/main
+BASE=https://raw.githubusercontent.com/cjcdev/bootstrap/main/docker
 DOCKER_SH=${BASE}/docker.sh
 DOCKERFILE=${BASE}/Dockerfile
 
