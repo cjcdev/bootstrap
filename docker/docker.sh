@@ -8,13 +8,13 @@ Helper script to build and run the docker container.
 Usage:
 
   Build the image:
-    ./docker -b
+    ./docker.sh -b
 
   Run './build.sh' inside of the container:
-    ./docker ./build.sh
+    ./docker.sh ./build.sh
 
   Run the container and drop into a shell:
-    ./docker
+    ./docker.sh
 
 Options:
    -b --Build the docker image.
