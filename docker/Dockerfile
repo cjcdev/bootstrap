@@ -1,4 +1,4 @@
-FROM ubuntu:22.04
+FROM ubuntu:24.04
 
 # Use DEBIAN_FRONTEND=noninteractive, to avoid image build hang waiting
 # for a default confirmation [Y/n] at some configurations.
@@ -14,34 +14,34 @@ RUN apt install -y --fix-missing gawk wget git-core diffstat \
 # Set up locales
 RUN locale-gen en_US.UTF-8 && \
     update-locale LC_ALL=en_US.UTF-8 LANG=en_US.UTF-8
-ENV LANG en_US.UTF-8
-ENV LC_ALL en_US.UTF-8
+ENV LANG=en_US.UTF-8
+ENV LC_ALL=en_US.UTF-8
 
 # Use bash
 RUN rm /bin/sh && ln -s bash /bin/sh
 
 # Add your user to sudoers to be able to install other packages in the container.
-ARG USER
-RUN echo "${USER} ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/${USER} && \
-    chmod 0440 /etc/sudoers.d/${USER}
+RUN deluser ubuntu
+ARG host_user
+RUN echo "${host_user} ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/${host_user} && \
+    chmod 0440 /etc/sudoers.d/${host_user}
 
 # Set the arguments for host_id and user_id to be able to save the build artifacts
 # outside the container, on host directories, as docker volumes.
 ARG host_uid \
     host_gid
-RUN groupadd -g $host_gid $USER && \
-    useradd -g $host_gid -m -s /bin/bash -u $host_uid $USER
+RUN groupadd -g $host_gid $host_user && \
+    useradd -g $host_gid -m -s /bin/bash -u $host_uid $host_user
 
 # create work dir that is owned by normal user
 WORKDIR /work
 
 # Switch to normal user.
-USER $USER
+USER $host_user
 
 RUN mkdir ~/bin
 RUN curl https://storage.googleapis.com/git-repo-downloads/repo > ~/bin/repo && chmod a+x ~/bin/repo
-ENV PATH="${PATH}:/home/$USER/bin"
+ENV PATH="${PATH}:/home/$host_user/bin"
 
-RUN git config --global user.email "no@email.com"
-RUN git config --global user.name "No Name"
-
+RUN git config --global user.email "$host_user@mail.com"
+RUN git config --global user.name "$host_user"

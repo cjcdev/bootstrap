@@ -22,7 +22,7 @@ Options:
 "
 }
 
-# figure out the path where this script is strored
+# figure out the path where this script is stored
 if [[ -h ${0} ]];then
   # When script is called as a symlink
   SCRIPT_FILE="${PWD}/$(readlink $(basename "$0"))"
@@ -44,7 +44,7 @@ while getopts bh OPTIONS; do
     b)
       # do docker build
       docker build --tag "${DOCKER_IMAGE_TAG}" \
-            --build-arg "USER=$(whoami)" \
+            --build-arg "host_user=build" \
             --build-arg "host_uid=$(id -u)" \
             --build-arg "host_gid=$(id -g)" \
             -f "${DOCKERFILE}" \
@@ -81,7 +81,7 @@ fi
 #       generated during the build and these are stored on the host.
 docker run -it --rm --privileged --name "${DOCKER_CONTAINER_NAME}" \
     -v "${WORK_DIR}":/work \
-    -v "${HOME}/.ssh/":"/home/${USER}/.ssh/:ro" \
+    -v "${HOME}/.ssh/":"/home/build/.ssh/:ro" \
     "${DOCKER_IMAGE_TAG}" \
     "$@"
 
