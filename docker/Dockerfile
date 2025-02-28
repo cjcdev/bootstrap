@@ -4,12 +4,15 @@ FROM ubuntu:24.04
 # for a default confirmation [Y/n] at some configurations.
 ENV DEBIAN_FRONTEND=noninteractive
 
-RUN apt clean
-RUN apt update
-RUN apt upgrade -y
-RUN apt install -y --fix-missing gawk wget git-core diffstat \
+# Install required packages
+RUN apt update && apt install -y \
+    gawk wget git-core diffstat \
     unzip tar locales net-tools sudo vim curl software-properties-common \
     screen tmux vim gcc build-essential xz-utils zstd
+
+# clean up apt cache and temp files to reduce image size
+RUN apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
 
 # Set up locales
 RUN locale-gen en_US.UTF-8 && \
